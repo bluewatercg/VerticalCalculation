@@ -1,0 +1,1302 @@
+[
+    {
+        "problem": "76 ÷ 38 =",
+        "answer": "2"
+    },
+    {
+        "problem": "91 ÷ 25 =",
+        "answer": "3 ... 16"
+    },
+    {
+        "problem": "83 ÷ 27 =",
+        "answer": "3 ... 2"
+    },
+    {
+        "problem": "80 ÷ 26 =",
+        "answer": "3 ... 2"
+    },
+    {
+        "problem": "68 ÷ 24 =",
+        "answer": "2 ... 20"
+    },
+    {
+        "problem": "38 ÷ 16 =",
+        "answer": "2 ... 6"
+    },
+    {
+        "problem": "91 ÷ 13 =",
+        "answer": "7"
+    },
+    {
+        "problem": "85 ÷ 17 =",
+        "answer": "5"
+    },
+    {
+        "problem": "97 ÷ 33 =",
+        "answer": "2 ... 31"
+    },
+    {
+        "problem": "56 ÷ 18 =",
+        "answer": "3 ... 2"
+    },
+    {
+        "problem": "60 ÷ 15 =",
+        "answer": "4"
+    },
+    {
+        "problem": "56 ÷ 39 =",
+        "answer": "1 ... 17"
+    },
+    {
+        "problem": "48 ÷ 14 =",
+        "answer": "3 ... 6"
+    },
+    {
+        "problem": "76 ÷ 36 =",
+        "answer": "2 ... 4"
+    },
+    {
+        "problem": "58 ÷ 19 =",
+        "answer": "3 ... 1"
+    },
+    {
+        "problem": "89 ÷ 23 =",
+        "answer": "3 ... 20"
+    },
+    {
+        "problem": "79 ÷ 27 =",
+        "answer": "2 ... 25"
+    },
+    {
+        "problem": "97 ÷ 24 =",
+        "answer": "4 ... 1"
+    },
+    {
+        "problem": "95 ÷ 19 =",
+        "answer": "5"
+    },
+    {
+        "problem": "88 ÷ 43 =",
+        "answer": "2 ... 2"
+    },
+    {
+        "problem": "75 ÷ 38 =",
+        "answer": "1 ... 37"
+    },
+    {
+        "problem": "78 ÷ 26 =",
+        "answer": "3"
+    },
+    {
+        "problem": "87 ÷ 29 =",
+        "answer": "3"
+    },
+    {
+        "problem": "93 ÷ 18 =",
+        "answer": "5 ... 3"
+    },
+    {
+        "problem": "74 ÷ 37 =",
+        "answer": "2"
+    },
+    {
+        "problem": "138 ÷ 23 =",
+        "answer": "6"
+    },
+    {
+        "problem": "266 ÷ 38 =",
+        "answer": "7"
+    },
+    {
+        "problem": "294 ÷ 42 =",
+        "answer": "7"
+    },
+    {
+        "problem": "168 ÷ 24 =",
+        "answer": "7"
+    },
+    {
+        "problem": "351 ÷ 39 =",
+        "answer": "9"
+    },
+    {
+        "problem": "387 ÷ 43 =",
+        "answer": "9"
+    },
+    {
+        "problem": "369 ÷ 46 =",
+        "answer": "8 ... 1"
+    },
+    {
+        "problem": "168 ÷ 32 =",
+        "answer": "5 ... 8"
+    },
+    {
+        "problem": "482 ÷ 58 =",
+        "answer": "8 ... 18"
+    },
+    {
+        "problem": "256 ÷ 64 =",
+        "answer": "4"
+    },
+    {
+        "problem": "228 ÷ 38 =",
+        "answer": "6"
+    },
+    {
+        "problem": "147 ÷ 19 =",
+        "answer": "7 ... 14"
+    },
+    {
+        "problem": "357 ÷ 51 =",
+        "answer": "7"
+    },
+    {
+        "problem": "215 ÷ 43 =",
+        "answer": "5"
+    },
+    {
+        "problem": "239 ÷ 47 =",
+        "answer": "5 ... 4"
+    },
+    {
+        "problem": "112 ÷ 28 =",
+        "answer": "4"
+    },
+    {
+        "problem": "465 ÷ 62 =",
+        "answer": "7 ... 31"
+    },
+    {
+        "problem": "296 ÷ 53 =",
+        "answer": "5 ... 31"
+    },
+    {
+        "problem": "272 ÷ 37 =",
+        "answer": "7 ... 13"
+    },
+    {
+        "problem": "425 ÷ 73 =",
+        "answer": "5 ... 60"
+    },
+    {
+        "problem": "476 ÷ 69 =",
+        "answer": "6 ... 62"
+    },
+    {
+        "problem": "375 ÷ 48 =",
+        "answer": "7 ... 39"
+    },
+    {
+        "problem": "165 ÷ 24 =",
+        "answer": "6 ... 21"
+    },
+    {
+        "problem": "229 ÷ 76 =",
+        "answer": "3 ... 1"
+    },
+    {
+        "problem": "486 ÷ 82 =",
+        "answer": "5 ... 76"
+    },
+    {
+        "problem": "369 ÷ 59 =",
+        "answer": "6 ... 15"
+    },
+    {
+        "problem": "416 ÷ 43 =",
+        "answer": "9 ... 29"
+    },
+    {
+        "problem": "537 ÷ 68 =",
+        "answer": "7 ... 61"
+    },
+    {
+        "problem": "746 ÷ 83 =",
+        "answer": "8 ... 82"
+    },
+    {
+        "problem": "549 ÷ 74 =",
+        "answer": "7 ... 21"
+    },
+    {
+        "problem": "352 ÷ 84 =",
+        "answer": "4 ... 16"
+    },
+    {
+        "problem": "467 ÷ 97 =",
+        "answer": "4 ... 79"
+    },
+    {
+        "problem": "247 ÷ 52 =",
+        "answer": "4 ... 39"
+    },
+    {
+        "problem": "426 ÷ 62 =",
+        "answer": "6 ... 54"
+    },
+    {
+        "problem": "296 ÷ 66 =",
+        "answer": "4 ... 32"
+    },
+    {
+        "problem": "548 ÷ 79 =",
+        "answer": "6 ... 74"
+    },
+    {
+        "problem": "247 ÷ 78 =",
+        "answer": "3 ... 73"
+    },
+    {
+        "problem": "328 ÷ 43 =",
+        "answer": "7 ... 27"
+    },
+    {
+        "problem": "184 ÷ 52 =",
+        "answer": "3 ... 28"
+    },
+    {
+        "problem": "185 ÷ 29 =",
+        "answer": "6 ... 11"
+    },
+    {
+        "problem": "385 ÷ 56 =",
+        "answer": "6 ... 49"
+    },
+    {
+        "problem": "124 ÷ 18 =",
+        "answer": "6 ... 16"
+    },
+    {
+        "problem": "336 ÷ 47 =",
+        "answer": "7 ... 7"
+    },
+    {
+        "problem": "429 ÷ 77 =",
+        "answer": "5 ... 44"
+    },
+    {
+        "problem": "539 ÷ 89 =",
+        "answer": "6 ... 5"
+    },
+    {
+        "problem": "192 ÷ 16 =",
+        "answer": "12"
+    },
+    {
+        "problem": "286 ÷ 22 =",
+        "answer": "13"
+    },
+    {
+        "problem": "294 ÷ 14 =",
+        "answer": "21"
+    },
+    {
+        "problem": "182 ÷ 13 =",
+        "answer": "14"
+    },
+    {
+        "problem": "384 ÷ 24 =",
+        "answer": "16"
+    },
+    {
+        "problem": "224 ÷ 18 =",
+        "answer": "12 ... 8"
+    },
+    {
+        "problem": "312 ÷ 26 =",
+        "answer": "12"
+    },
+    {
+        "problem": "448 ÷ 32 =",
+        "answer": "14"
+    },
+    {
+        "problem": "367 ÷ 17 =",
+        "answer": "21 ... 10"
+    },
+    {
+        "problem": "504 ÷ 21 =",
+        "answer": "24"
+    },
+    {
+        "problem": "378 ÷ 18 =",
+        "answer": "21"
+    },
+    {
+        "problem": "292 ÷ 16 =",
+        "answer": "18 ... 4"
+    },
+    {
+        "problem": "408 ÷ 34 =",
+        "answer": "12"
+    },
+    {
+        "problem": "228 ÷ 19 =",
+        "answer": "12"
+    },
+    {
+        "problem": "438 ÷ 36 =",
+        "answer": "12 ... 6"
+    },
+    {
+        "problem": "546 ÷ 42 =",
+        "answer": "13"
+    },
+    {
+        "problem": "448 ÷ 28 =",
+        "answer": "16"
+    },
+    {
+        "problem": "245 ÷ 15 =",
+        "answer": "16 ... 5"
+    },
+    {
+        "problem": "495 ÷ 33 =",
+        "answer": "15"
+    },
+    {
+        "problem": "768 ÷ 48 =",
+        "answer": "16"
+    },
+    {
+        "problem": "472 ÷ 39 =",
+        "answer": "12 ... 4"
+    },
+    {
+        "problem": "214 ÷ 14 =",
+        "answer": "15 ... 4"
+    },
+    {
+        "problem": "739 ÷ 35 =",
+        "answer": "21 ... 4"
+    },
+    {
+        "problem": "654 ÷ 46 =",
+        "answer": "14 ... 10"
+    },
+    {
+        "problem": "481 ÷ 37 =",
+        "answer": "13"
+    },
+    {
+        "problem": "432 ÷ 24 =",
+        "answer": "18"
+    },
+    {
+        "problem": "218 ÷ 12 =",
+        "answer": "18 ... 2"
+    },
+    {
+        "problem": "338 ÷ 26 =",
+        "answer": "13"
+    },
+    {
+        "problem": "405 ÷ 27 =",
+        "answer": "15"
+    },
+    {
+        "problem": "732 ÷ 38 =",
+        "answer": "19 ... 10"
+    },
+    {
+        "problem": "546 ÷ 39 =",
+        "answer": "14"
+    },
+    {
+        "problem": "882 ÷ 42 =",
+        "answer": "21"
+    },
+    {
+        "problem": "867 ÷ 51 =",
+        "answer": "17"
+    },
+    {
+        "problem": "208 ÷ 13 =",
+        "answer": "16"
+    },
+    {
+        "problem": "322 ÷ 23 =",
+        "answer": "14"
+    },
+    {
+        "problem": "572 ÷ 47 =",
+        "answer": "12 ... 8"
+    },
+    {
+        "problem": "212 ÷ 17 =",
+        "answer": "12 ... 8"
+    },
+    {
+        "problem": "637 ÷ 49 =",
+        "answer": "13"
+    },
+    {
+        "problem": "1618 ÷ 62 =",
+        "answer": "26 ... 6"
+    },
+    {
+        "problem": "693 ÷ 63 =",
+        "answer": "11"
+    },
+    {
+        "problem": "336 ÷ 14 =",
+        "answer": "24"
+    },
+    {
+        "problem": "2664 ÷ 74 =",
+        "answer": "36"
+    },
+    {
+        "problem": "767 ÷ 59 =",
+        "answer": "13"
+    },
+    {
+        "problem": "902 ÷ 82 =",
+        "answer": "11"
+    },
+    {
+        "problem": "2400 ÷ 46 =",
+        "answer": "52 ... 8"
+    },
+    {
+        "problem": "658 ÷ 54 =",
+        "answer": "12 ... 10"
+    },
+    {
+        "problem": "936 ÷ 72 =",
+        "answer": "13"
+    },
+    {
+        "problem": "4176 ÷ 48 =",
+        "answer": "87"
+    },
+    {
+        "problem": "370 ÷ 23 =",
+        "answer": "16 ... 2"
+    },
+    {
+        "problem": "824 ÷ 43 =",
+        "answer": "19 ... 7"
+    },
+    {
+        "problem": "3425 ÷ 76 =",
+        "answer": "45 ... 5"
+    },
+    {
+        "problem": "1212 ÷ 12 =",
+        "answer": "101"
+    },
+    {
+        "problem": "2424 ÷ 24 =",
+        "answer": "101"
+    },
+    {
+        "problem": "2038 ÷ 19 =",
+        "answer": "107 ... 5"
+    },
+    {
+        "problem": "2550 ÷ 25 =",
+        "answer": "102"
+    },
+    {
+        "problem": "1717 ÷ 17 =",
+        "answer": "101"
+    },
+    {
+        "problem": "2448 ÷ 24 =",
+        "answer": "102"
+    },
+    {
+        "problem": "4623 ÷ 23 =",
+        "answer": "201"
+    },
+    {
+        "problem": "2730 ÷ 26 =",
+        "answer": "105"
+    },
+    {
+        "problem": "1530 ÷ 15 =",
+        "answer": "102"
+    },
+    {
+        "problem": "53 × 41 =",
+        "answer": "2173"
+    },
+    {
+        "problem": "39 × 42 =",
+        "answer": "1638"
+    },
+    {
+        "problem": "69 × 21 =",
+        "answer": "1449"
+    },
+    {
+        "problem": "88 × 13 =",
+        "answer": "1144"
+    },
+    {
+        "problem": "43 × 17 =",
+        "answer": "731"
+    },
+    {
+        "problem": "26 × 24 =",
+        "answer": "624"
+    },
+    {
+        "problem": "23 × 49 =",
+        "answer": "1127"
+    },
+    {
+        "problem": "35 × 23 =",
+        "answer": "805"
+    },
+    {
+        "problem": "32 × 72 =",
+        "answer": "2304"
+    },
+    {
+        "problem": "49 × 32 =",
+        "answer": "1568"
+    },
+    {
+        "problem": "62 × 34 =",
+        "answer": "2108"
+    },
+    {
+        "problem": "38 × 45 =",
+        "answer": "1710"
+    },
+    {
+        "problem": "73 × 28 =",
+        "answer": "2044"
+    },
+    {
+        "problem": "16 × 57 =",
+        "answer": "912"
+    },
+    {
+        "problem": "24 × 47 =",
+        "answer": "1128"
+    },
+    {
+        "problem": "48 × 44 =",
+        "answer": "2112"
+    },
+    {
+        "problem": "19 × 76 =",
+        "answer": "1444"
+    },
+    {
+        "problem": "37 × 68 =",
+        "answer": "2516"
+    },
+    {
+        "problem": "66 × 34 =",
+        "answer": "2244"
+    },
+    {
+        "problem": "64 × 15 =",
+        "answer": "960"
+    },
+    {
+        "problem": "54 × 27 =",
+        "answer": "1458"
+    },
+    {
+        "problem": "14 × 78 =",
+        "answer": "1092"
+    },
+    {
+        "problem": "59 × 37 =",
+        "answer": "2183"
+    },
+    {
+        "problem": "74 × 48 =",
+        "answer": "3552"
+    },
+    {
+        "problem": "46 × 54 =",
+        "answer": "2484"
+    },
+    {
+        "problem": "58 × 75 =",
+        "answer": "4350"
+    },
+    {
+        "problem": "68 × 18 =",
+        "answer": "1224"
+    },
+    {
+        "problem": "92 × 36 =",
+        "answer": "3312"
+    },
+    {
+        "problem": "55 × 72 =",
+        "answer": "3960"
+    },
+    {
+        "problem": "17 × 38 =",
+        "answer": "646"
+    },
+    {
+        "problem": "56 × 94 =",
+        "answer": "5264"
+    },
+    {
+        "problem": "28 × 43 =",
+        "answer": "1204"
+    },
+    {
+        "problem": "84 × 66 =",
+        "answer": "5544"
+    },
+    {
+        "problem": "524 × 24 =",
+        "answer": "12576"
+    },
+    {
+        "problem": "604 × 37 =",
+        "answer": "22348"
+    },
+    {
+        "problem": "336 × 31 =",
+        "answer": "10416"
+    },
+    {
+        "problem": "306 × 25 =",
+        "answer": "7650"
+    },
+    {
+        "problem": "114 × 16 =",
+        "answer": "1824"
+    },
+    {
+        "problem": "126 × 23 =",
+        "answer": "2898"
+    },
+    {
+        "problem": "312 × 14 =",
+        "answer": "4368"
+    },
+    {
+        "problem": "32 × 11 =",
+        "answer": "352"
+    },
+    {
+        "problem": "24 × 21 =",
+        "answer": "504"
+    },
+    {
+        "problem": "21 × 12 =",
+        "answer": "252"
+    },
+    {
+        "problem": "13 × 31 =",
+        "answer": "403"
+    },
+    {
+        "problem": "19 × 18 =",
+        "answer": "342"
+    },
+    {
+        "problem": "14 × 28 =",
+        "answer": "392"
+    },
+    {
+        "problem": "15 × 21 =",
+        "answer": "315"
+    },
+    {
+        "problem": "23 × 34 =",
+        "answer": "782"
+    },
+    {
+        "problem": "24 × 32 =",
+        "answer": "768"
+    },
+    {
+        "problem": "16 × 28 =",
+        "answer": "448"
+    },
+    {
+        "problem": "45 × 13 =",
+        "answer": "585"
+    },
+    {
+        "problem": "17 × 61 =",
+        "answer": "1037"
+    },
+    {
+        "problem": "27 × 41 =",
+        "answer": "1107"
+    },
+    {
+        "problem": "35 × 12 =",
+        "answer": "420"
+    },
+    {
+        "problem": "38 × 13 =",
+        "answer": "494"
+    },
+    {
+        "problem": "49 × 21 =",
+        "answer": "1029"
+    },
+    {
+        "problem": "27 × 14 =",
+        "answer": "378"
+    },
+    {
+        "problem": "31 × 26 =",
+        "answer": "806"
+    },
+    {
+        "problem": "15 × 23 =",
+        "answer": "345"
+    },
+    {
+        "problem": "14 × 18 =",
+        "answer": "252"
+    },
+    {
+        "problem": "16 × 17 =",
+        "answer": "272"
+    },
+    {
+        "problem": "25 × 13 =",
+        "answer": "325"
+    },
+    {
+        "problem": "28 × 44 =",
+        "answer": "1232"
+    },
+    {
+        "problem": "36 × 32 =",
+        "answer": "1152"
+    },
+    {
+        "problem": "35 × 22 =",
+        "answer": "770"
+    },
+    {
+        "problem": "18 × 51 =",
+        "answer": "918"
+    },
+    {
+        "problem": "63 × 13 =",
+        "answer": "819"
+    },
+    {
+        "problem": "14 × 42 =",
+        "answer": "588"
+    },
+    {
+        "problem": "18 × 15 =",
+        "answer": "270"
+    },
+    {
+        "problem": "24 × 24 =",
+        "answer": "576"
+    },
+    {
+        "problem": "23 × 37 =",
+        "answer": "851"
+    },
+    {
+        "problem": "21 × 45 =",
+        "answer": "945"
+    },
+    {
+        "problem": "19 × 22 =",
+        "answer": "418"
+    },
+    {
+        "problem": "39 × 23 =",
+        "answer": "897"
+    },
+    {
+        "problem": "24 × 16 =",
+        "answer": "384"
+    },
+    {
+        "problem": "33 × 25 =",
+        "answer": "825"
+    },
+    {
+        "problem": "23 × 17 =",
+        "answer": "391"
+    },
+    {
+        "problem": "88 × 23 =",
+        "answer": "2024"
+    },
+    {
+        "problem": "42 × 19 =",
+        "answer": "798"
+    },
+    {
+        "problem": "26 × 36 =",
+        "answer": "936"
+    },
+    {
+        "problem": "46 × 31 =",
+        "answer": "1426"
+    },
+    {
+        "problem": "34 × 25 =",
+        "answer": "850"
+    },
+    {
+        "problem": "48 × 15 =",
+        "answer": "720"
+    },
+    {
+        "problem": "37 × 42 =",
+        "answer": "1554"
+    },
+    {
+        "problem": "85 × 12 =",
+        "answer": "1020"
+    },
+    {
+        "problem": "25 × 33 =",
+        "answer": "825"
+    },
+    {
+        "problem": "54 × 14 =",
+        "answer": "756"
+    },
+    {
+        "problem": "43 × 26 =",
+        "answer": "1118"
+    },
+    {
+        "problem": "37 × 22 =",
+        "answer": "814"
+    },
+    {
+        "problem": "41 × 38 =",
+        "answer": "1558"
+    },
+    {
+        "problem": "27 × 44 =",
+        "answer": "1188"
+    },
+    {
+        "problem": "56 × 31 =",
+        "answer": "1736"
+    },
+    {
+        "problem": "35 × 26 =",
+        "answer": "910"
+    },
+    {
+        "problem": "47 × 32 =",
+        "answer": "1504"
+    },
+    {
+        "problem": "27 × 18 =",
+        "answer": "486"
+    },
+    {
+        "problem": "2940 ÷ 28 =",
+        "answer": "105"
+    },
+    {
+        "problem": "3612 ÷ 12 =",
+        "answer": "301"
+    },
+    {
+        "problem": "5229 ÷ 26 =",
+        "answer": "201 ... 3"
+    },
+    {
+        "problem": "6868 ÷ 34 =",
+        "answer": "202"
+    },
+    {
+        "problem": "4558 ÷ 43 =",
+        "answer": "105 ... 43"
+    },
+    {
+        "problem": "9968 ÷ 33 =",
+        "answer": "302 ... 2"
+    },
+    {
+        "problem": "5356 ÷ 52 =",
+        "answer": "103"
+    },
+    {
+        "problem": "5436 ÷ 18 =",
+        "answer": "302"
+    },
+    {
+        "problem": "9494 ÷ 47 =",
+        "answer": "202"
+    },
+    {
+        "problem": "6760 ÷ 65 =",
+        "answer": "104"
+    },
+    {
+        "problem": "3815 ÷ 35 =",
+        "answer": "109"
+    },
+    {
+        "problem": "8435 ÷ 28 =",
+        "answer": "301 ... 7"
+    },
+    {
+        "problem": "3857 ÷ 19 =",
+        "answer": "202 ... 19"
+    },
+    {
+        "problem": "9249 ÷ 46 =",
+        "answer": "201 ... 3"
+    },
+    {
+        "problem": "80 ÷ 39 =",
+        "answer": "2 ... 2"
+    },
+    {
+        "problem": "242 × 29 =",
+        "answer": "7018"
+    },
+    {
+        "problem": "324 × 27 =",
+        "answer": "8748"
+    },
+    {
+        "problem": "262 × 36 =",
+        "answer": "9432"
+    },
+    {
+        "problem": "329 × 15 =",
+        "answer": "4935"
+    },
+    {
+        "problem": "148 × 32 =",
+        "answer": "4736"
+    },
+    {
+        "problem": "245 × 25 =",
+        "answer": "6125"
+    },
+    {
+        "problem": "466 × 19 =",
+        "answer": "8854"
+    },
+    {
+        "problem": "249 × 34 =",
+        "answer": "8466"
+    },
+    {
+        "problem": "65 ÷ 17 =",
+        "answer": "3 ... 14"
+    },
+    {
+        "problem": "89 ÷ 45 =",
+        "answer": "1 ... 44"
+    },
+    {
+        "problem": "53 ÷ 29 =",
+        "answer": "1 ... 24"
+    },
+    {
+        "problem": "49 ÷ 23 =",
+        "answer": "2 ... 3"
+    },
+    {
+        "problem": "92 ÷ 46 =",
+        "answer": "2"
+    },
+    {
+        "problem": "90 ÷ 15 =",
+        "answer": "6"
+    },
+    {
+        "problem": "94 ÷ 47 =",
+        "answer": "2"
+    },
+    {
+        "problem": "81 ÷ 39 =",
+        "answer": "2 ... 3"
+    },
+    {
+        "problem": "84 ÷ 28 =",
+        "answer": "3"
+    },
+    {
+        "problem": "99 ÷ 14 =",
+        "answer": "7 ... 1"
+    },
+    {
+        "problem": "676 ÷ 93 =",
+        "answer": "7 ... 25"
+    },
+    {
+        "problem": "537 ÷ 84 =",
+        "answer": "6 ... 65"
+    },
+    {
+        "problem": "275 ÷ 56 =",
+        "answer": "4 ... 51"
+    },
+    {
+        "problem": "348 ÷ 58 =",
+        "answer": "6"
+    },
+    {
+        "problem": "432 ÷ 72 =",
+        "answer": "6"
+    },
+    {
+        "problem": "563 ÷ 28 =",
+        "answer": "20 ... 3"
+    },
+    {
+        "problem": "352 ÷ 32 =",
+        "answer": "11"
+    },
+    {
+        "problem": "197 ÷ 28 =",
+        "answer": "7 ... 1"
+    },
+    {
+        "problem": "153 ÷ 24 =",
+        "answer": "6 ... 9"
+    },
+    {
+        "problem": "562 ÷ 93 =",
+        "answer": "6 ... 4"
+    },
+    {
+        "problem": "134 ÷ 17 =",
+        "answer": "7 ... 15"
+    },
+    {
+        "problem": "419 ÷ 57 =",
+        "answer": "7 ... 20"
+    },
+    {
+        "problem": "473 ÷ 62 =",
+        "answer": "7 ... 39"
+    },
+    {
+        "problem": "357 ÷ 42 =",
+        "answer": "8 ... 21"
+    },
+    {
+        "problem": "576 ÷ 96 =",
+        "answer": "6"
+    },
+    {
+        "problem": "312 ÷ 37 =",
+        "answer": "8 ... 16"
+    },
+    {
+        "problem": "552 ÷ 91 =",
+        "answer": "6 ... 6"
+    },
+    {
+        "problem": "21 × 11 =",
+        "answer": "231"
+    },
+    {
+        "problem": "42 × 22 =",
+        "answer": "924"
+    },
+    {
+        "problem": "32 × 13 =",
+        "answer": "416"
+    },
+    {
+        "problem": "43 × 12 =",
+        "answer": "516"
+    },
+    {
+        "problem": "23 × 21 =",
+        "answer": "483"
+    },
+    {
+        "problem": "16 × 14 =",
+        "answer": "224"
+    },
+    {
+        "problem": "31 × 17 =",
+        "answer": "527"
+    },
+    {
+        "problem": "19 × 18 =",
+        "answer": "342"
+    },
+    {
+        "problem": "28 × 32 =",
+        "answer": "896"
+    },
+    {
+        "problem": "15 × 24 =",
+        "answer": "360"
+    },
+    {
+        "problem": "42 × 13 =",
+        "answer": "546"
+    },
+    {
+        "problem": "24 × 23 =",
+        "answer": "552"
+    },
+    {
+        "problem": "37 × 22 =",
+        "answer": "814"
+    },
+    {
+        "problem": "14 × 31 =",
+        "answer": "434"
+    },
+    {
+        "problem": "51 × 71 =",
+        "answer": "3621"
+    },
+    {
+        "problem": "28 × 41 =",
+        "answer": "1148"
+    },
+    {
+        "problem": "23 × 16 =",
+        "answer": "368"
+    },
+    {
+        "problem": "26 × 12 =",
+        "answer": "312"
+    },
+    {
+        "problem": "21 × 19 =",
+        "answer": "399"
+    },
+    {
+        "problem": "42 × 13 =",
+        "answer": "546"
+    },
+    {
+        "problem": "52 × 31 =",
+        "answer": "1612"
+    },
+    {
+        "problem": "37 × 12 =",
+        "answer": "444"
+    },
+    {
+        "problem": "26 × 32 =",
+        "answer": "832"
+    },
+    {
+        "problem": "23 × 44 =",
+        "answer": "1012"
+    },
+    {
+        "problem": "28 × 33 =",
+        "answer": "924"
+    },
+    {
+        "problem": "15 × 19 =",
+        "answer": "285"
+    },
+    {
+        "problem": "13 × 53 =",
+        "answer": "689"
+    },
+    {
+        "problem": "14 × 29 =",
+        "answer": "406"
+    },
+    {
+        "problem": "81 × 41 =",
+        "answer": "3321"
+    },
+    {
+        "problem": "74 × 21 =",
+        "answer": "1554"
+    },
+    {
+        "problem": "48 × 12 =",
+        "answer": "576"
+    },
+    {
+        "problem": "13 × 36 =",
+        "answer": "468"
+    },
+    {
+        "problem": "25 × 14 =",
+        "answer": "350"
+    },
+    {
+        "problem": "23 × 34 =",
+        "answer": "782"
+    },
+    {
+        "problem": "48 × 22 =",
+        "answer": "1056"
+    },
+    {
+        "problem": "16 × 16 =",
+        "answer": "256"
+    },
+    {
+        "problem": "24 × 38 =",
+        "answer": "912"
+    },
+    {
+        "problem": "19 × 21 =",
+        "answer": "399"
+    },
+    {
+        "problem": "17 × 23 =",
+        "answer": "391"
+    },
+    {
+        "problem": "32 × 26 =",
+        "answer": "832"
+    },
+    {
+        "problem": "18 × 18 =",
+        "answer": "324"
+    },
+    {
+        "problem": "24 × 15 =",
+        "answer": "360"
+    },
+    {
+        "problem": "13 × 25 =",
+        "answer": "325"
+    },
+    {
+        "problem": "36 × 23 =",
+        "answer": "828"
+    },
+    {
+        "problem": "49 × 22 =",
+        "answer": "1078"
+    },
+    {
+        "problem": "28 × 24 =",
+        "answer": "672"
+    },
+    {
+        "problem": "54 × 12 =",
+        "answer": "648"
+    },
+    {
+        "problem": "63 × 13 =",
+        "answer": "819"
+    },
+    {
+        "problem": "43 × 32 =",
+        "answer": "1376"
+    },
+    {
+        "problem": "19 × 41 =",
+        "answer": "779"
+    }
+]

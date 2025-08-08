@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>竖式计算练习页生成器</title>
+    <!-- 引入 html2pdf.js 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        /* --- 全局与布局样式 --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .controls-container {
+            width: 100%;
+            max-width: 21cm;
+            /* A4 宽度 */
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .upload-area {
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .upload-area:hover {
+            background-color: #f0f8ff;
+            border-color: #0056b3;
+        }
+
+        .upload-area p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .button {
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #28a745;
+            /* 绿色，更适合导出 */
+            color: white;
+            transition: background-color 0.3s;
+            align-self: flex-start;
+        }
+
+        .button:disabled {
+            background-color: #a0a0a0;
+            cursor: not-allowed;
+        }
+
+        .button:not(:disabled):hover {
+            background-color: #218838;
+        }
+
+        /* --- A4 报告页样式 --- */
+        #report-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 1cm;
+            /* A4纸边距1cm */
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .calculation-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 0;
+            width: 100%;
+            height: 25.7cm; /* A4纸去掉上下边距后的高度 */
+        }
+
+        .calculation-item {
+            display: flex;
+            align-items: center;
+            /* 垂直居中对齐 */
+            justify-content: flex-start;
+            /* 从左开始对齐 */
+            font-family: 'KaiTi', 'STKaiti', serif;
+            font-size: 22px;
+            padding: 10px 0;
+        }
+
+        .item-index {
+            font-size: 16px;
+            color: #888;
+            width: 30px;
+            /* 固定宽度以对齐 */
+            font-family: sans-serif;
+        }
+
+        .divisor {
+            text-align: right;
+            width: 40px;
+            /* 固定宽度以对齐 */
+            padding-right: 8px;
+        }
+
+        .calculation-item canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="controls-container">
+        <!-- 1. 用户界面 (UI) -->
+        <div class="controls">
+            <label for="file-input" class="upload-area" id="upload-area">
+                <p>点击上传竖式计算JSON文件</p>
+                <p id="file-name-display" style="font-size: 0.9rem; color: #007bff; margin-top: 0.5rem;"></p>
+            </label>
+            <input type="file" id="file-input" accept=".json">
+            <button id="export-pdf-btn" class="button" disabled>导出为PDF</button>
+            <button id="toggle-blanks-btn" class="button" disabled>切换为填空模式</button>
+            <button id="toggle-boxes-btn" class="button" disabled>切换为方框模式</button>
+            <div class="pagination-controls">
+                <button id="prev-page-btn" class="button" disabled>上一页</button>
+                <span id="page-info"></span>
+                <button id="next-page-btn" class="button" disabled>下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 容器用于展示渲染后的A4页面 -->
+    <div id="report-container">
+        <!-- 动态内容将在这里渲染 -->
+    </div>
+
+    <script>
+        // --- DOM 元素获取 ---
+        const fileInput = document.getElementById('file-input');
+        const uploadArea = document.getElementById('upload-area');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const exportPdfBtn = document.getElementById('export-pdf-btn');
+        const toggleBlanksBtn = document.getElementById('toggle-blanks-btn'); // 获取新按钮
+        const toggleBoxesBtn = document.getElementById('toggle-boxes-btn'); // 获取方框按钮
+        const reportContainer = document.getElementById('report-container');
+
+        let problemsData = null; // 用于存储解析后的题目数组
+        let currentPage = 1;
+        const problemsPerPage = 20;
+        let showBlanks = false; // 新增状态变量，控制是否显示空白框
+        let showBoxes = false; // 新增状态变量，控制是否显示方框字符
+
+        // --- DOM 元素获取 (分页) ---
+        const prevPageBtn = document.getElementById('prev-page-btn');
+        const nextPageBtn = document.getElementById('next-page-btn');
+        const pageInfo = document.getElementById('page-info');
+
+        // --- 事件监听 ---
+        fileInput.addEventListener('change', handleFileSelect);
+        exportPdfBtn.addEventListener('click', exportReportToPdf);
+        toggleBlanksBtn.addEventListener('click', toggleBlanksMode); // 新增按钮事件监听
+        toggleBoxesBtn.addEventListener('click', toggleBoxesMode); // 方框按钮事件监听
+        prevPageBtn.addEventListener('click', () => changePage(-1));
+        nextPageBtn.addEventListener('click', () => changePage(1));
+
+        /**
+         * 处理文件上传事件
+         */
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.type !== 'application/json') {
+                alert('请上传有效的JSON文件 (.json)');
+                return;
+            }
+            fileNameDisplay.textContent = `已选择文件: ${file.name}`;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const jsonContent = e.target.result;
+                    const parsedData = JSON.parse(jsonContent);
+
+                    if (!validateProblemsData(parsedData)) {
+                        alert('JSON文件结构不符合规范。应为一个包含{problem, answer}对象的数组。');
+                        resetState();
+                        return;
+                    }
+
+                    problemsData = parsedData;
+                    currentPage = 1;
+                    renderCalculationPage();
+                    exportPdfBtn.disabled = false;
+                    toggleBlanksBtn.disabled = false; // 启用填空模式按钮
+                    toggleBoxesBtn.disabled = false; // 启用方框模式按钮
+                    updatePaginationControls();
+
+                } catch (error) {
+                    alert(`解析JSON文件时出错: ${error.message}`);
+                    resetState();
+                }
+            };
+            reader.onerror = () => {
+                alert('读取文件时发生错误。');
+                resetState();
+            };
+            reader.readAsText(file);
+        }
+
+        /**
+         * 校验JSON数据是否为题目数组
+         */
+        function validateProblemsData(data) {
+            // 接受一个更通用的格式
+            return Array.isArray(data) && data.length > 0;
+        }
+
+        /**
+         * 渲染竖式计算页面
+         */
+        function renderCalculationPage() {
+            if (!problemsData) return;
+            reportContainer.innerHTML = ''; // 清空旧内容
+
+            const start = (currentPage - 1) * problemsPerPage;
+            const end = start + problemsPerPage;
+            const problemsToRender = problemsData.slice(start, end);
+
+            const grid = document.createElement('div');
+            grid.className = 'calculation-grid';
+
+            problemsToRender.forEach((problem, index) => {
+                const itemElement = createCalculationItem(problem, index + 1);
+                if (itemElement) {
+                    grid.appendChild(itemElement);
+                }
+            });
+
+            reportContainer.appendChild(grid);
+        }
+
+        /**
+         * 切换填空模式
+         */
+        function toggleBlanksMode() {
+            showBlanks = !showBlanks;
+            showBoxes = false; // 关闭方框模式
+            toggleBlanksBtn.textContent = showBlanks ? '切换为数字模式' : '切换为填空模式';
+            toggleBoxesBtn.textContent = '切换为方框模式';
+            renderCalculationPage(); // 重新渲染页面以应用新模式
+        }
+
+        /**
+         * 切换方框模式
+         */
+        function toggleBoxesMode() {
+            showBoxes = !showBoxes;
+            showBlanks = false; // 关闭填空模式
+            toggleBoxesBtn.textContent = showBoxes ? '切换为数字模式' : '切换为方框模式';
+            toggleBlanksBtn.textContent = '切换为填空模式';
+            renderCalculationPage(); // 重新渲染页面以应用新模式
+        }
+
+        /**
+         * 绘制空白框
+         * @param {CanvasRenderingContext2D} ctx - Canvas 2D 上下文
+         * @param {string} text - 要绘制空白框的数字字符串
+         * @param {number} x - 绘制区域的右对齐X坐标
+         * @param {number} y - 绘制区域的Y坐标
+         * @param {number} charWidth - 每个数字的平均宽度
+         * @param {number} charSpacing - 数字之间的间距
+         */
+        function drawBlanks(ctx, text, x, y, charWidth, charSpacing) {
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 1;
+            const boxHeight = 35; // 框的高度，与字体大小匹配
+            const textMetrics = ctx.measureText('0'); // 获取单个数字的宽度作为基准
+
+            for (let i = 0; i < text.length; i++) {
+                const charX = x - (text.length - i) * charWidth - (text.length - 1 - i) * charSpacing;
+                ctx.strokeRect(charX, y - boxHeight + 5, charWidth, boxHeight); // 调整Y坐标使框与基线对齐
+            }
+        }
+
+        /**
+         * 绘制带间距的数字
+         * @param {CanvasRenderingContext2D} ctx - Canvas 2D 上下文
+         * @param {string} text - 要绘制的数字字符串
+         * @param {number} x - 绘制区域的右对齐X坐标
+         * @param {number} y - 绘制区域的Y坐标
+         * @param {number} charSpacing - 数字之间的间距，默认20
+         * @param {boolean} useBoxes - 是否用方框替换数字，默认false
+         */
+        function drawSpacedNumbers(ctx, text, x, y, charSpacing = 20, useBoxes = false) {
+            const charWidth = ctx.measureText('0').width; // 获取单个数字的宽度
+
+            if (useBoxes) {
+                // 方框模式：绘制40×40正方形，从右边开始布局
+                const boxSize = 40;
+                const boxSpacing = 2; // 正方形之间的间距
+
+                for (let i = 0; i < text.length; i++) {
+                    // 从右边开始，每个正方形的右边位置
+                    const boxRightX = x - i * (boxSize + boxSpacing);
+                    // 正方形的左上角位置
+                    const boxLeftX = boxRightX - boxSize;
+
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 1;
+                    // 绘制正方形
+                    ctx.strokeRect(boxLeftX, y - boxSize + 8, boxSize, boxSize);
+                }
+            } else {
+                // 数字模式：正常绘制数字
+                for (let i = 0; i < text.length; i++) {
+                    const charX = x - (text.length - i) * (charWidth + charSpacing) + charSpacing;
+                    ctx.fillText(text[i], charX, y);
+                }
+            }
+        }
+
+        /**
+         * 解析题目字符串，支持加、乘、除
+         * @param {string} problemStr - 题目字符串
+         * @returns {{operand1: number, operand2: number, operator: string}|null}
+         */
+        function parseProblem(problemStr) {
+            const cleanedStr = problemStr.replace(/=/g, '').trim();
+            const match = cleanedStr.match(/(\d+)\s*([+\-×÷])\s*(\d+)/);
+            if (match && match.length === 4) {
+                return {
+                    operand1: Number(match[1]),
+                    operand2: Number(match[3]),
+                    operator: match[2]
+                };
+            }
+            return null;
+        }
+
+        /**
+         * 创建单个竖式计算题目的DOM元素
+         * @param {object} problemData - 单个题目对象 {problem, answer}
+         * @param {number} index - 题目序号
+         * @returns {HTMLElement|null}
+         */
+        function createCalculationItem(problemData, index) {
+            const parsed = parseProblem(problemData.problem);
+            if (!parsed) return null;
+
+            const item = document.createElement('div');
+            item.className = 'calculation-item';
+
+            const canvas = document.createElement('canvas');
+            // A4纸精确计算：可用空间19cm×27.7cm，4×5布局
+            // 每个item：4.75cm×5.54cm，但考虑到显示效果，适当调整
+            canvas.width = 300; // 增加宽度确保内容清晰
+            canvas.height = 350; // 增加高度确保竖式完整显示，避免重叠
+            item.appendChild(canvas);
+
+            // 调度到相应的绘制函数
+            drawCalculation(canvas, index, parsed, problemData); // 传入原始problemData以获取答案
+
+            return item;
+        }
+
+        /**
+        /**
+         * 绘制调度器
+         */
+        function drawCalculation(canvas, index, problem, originalProblemData) {
+            const { operand1, operand2, operator } = problem;
+            switch (operator) {
+                case '+':
+                    drawAddition(canvas, index, operand1, operand2, originalProblemData);
+                    break;
+                case '×':
+                    drawMultiplication(canvas, index, operand1, operand2, originalProblemData);
+                    break;
+                case '÷':
+                    drawDivision(canvas, index, operand1, operand2, originalProblemData);
+                    break;
+                default:
+                    // 不支持的操作符
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillText(`不支持的操作: ${operator}`, 10, 50);
+            }
+        }
+
+        // --- 专用绘制函数 ---
+
+        function drawAddition(canvas, index, op1, op2, originalProblemData) {
+            const ctx = canvas.getContext('2d');
+            ctx.font = "18px 'Times New Roman'"; // 适应180px宽度的字体
+            ctx.textAlign = 'right';
+            const rightAlignX = canvas.width - 8;
+            const lineSpacing = 25; // 适应210px高度的行间距
+            let y = 60; // 适应210px高度的顶部边距
+
+            // 绘制横式
+            ctx.textAlign = 'left';
+            ctx.font = "12px 'Times New Roman'"; // 横式字体更小以适应宽度
+            ctx.fillText(`${originalProblemData.problem}${showBoxes ? '' : ' ' + originalProblemData.answer}`, 5, 20);
+            ctx.font = "18px 'Times New Roman'"; // 竖式字体
+            ctx.textAlign = 'right';
+
+            // 计算各数字的实际宽度（包含间距）
+            const charSpacing = 12; // 适应180px宽度的字符间距
+            function getSpacedWidth(str) {
+                const charWidth = ctx.measureText('0').width;
+                return str.length * charWidth + (str.length - 1) * charSpacing;
+            }
+
+            const op1Width = getSpacedWidth(op1.toString());
+            const op2Width = getSpacedWidth(op2.toString());
+            const resultWidth = getSpacedWidth((op1 + op2).toString());
+
+            // 绘制加数
+            if (showBlanks) {
+                drawBlanks(ctx, op1.toString(), rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, op1.toString(), rightAlignX, y, charSpacing, showBoxes);
+            }
+
+            y += lineSpacing;
+
+            // 绘制被加数
+            if (showBlanks) {
+                drawBlanks(ctx, op2.toString(), rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, op2.toString(), rightAlignX, y, charSpacing, showBoxes);
+            }
+
+            // 绘制加号
+            ctx.textAlign = 'left';
+            ctx.fillText('+', rightAlignX - op2Width - 15, y);
+            ctx.textAlign = 'right';
+
+            // 绘制横线
+            y += 10;
+            ctx.beginPath();
+            const maxWidth = Math.max(op1Width, op2Width, resultWidth);
+            ctx.moveTo(rightAlignX - maxWidth - 25, y);
+            ctx.lineTo(rightAlignX, y);
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 绘制结果
+            y += lineSpacing;
+            if (showBlanks) {
+                drawBlanks(ctx, (op1 + op2).toString(), rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, (op1 + op2).toString(), rightAlignX, y, charSpacing, showBoxes);
+            }
+        }
+
+        function drawMultiplication(canvas, index, op1, op2, originalProblemData) {
+            const ctx = canvas.getContext('2d');
+            ctx.font = "24px 'Times New Roman'"; // 合适的字体大小
+            ctx.textAlign = 'right';
+            const rightAlignX = canvas.width - 10;
+            const lineSpacing = 35; // 恢复合适的行间距
+            const charSpacing = 18; // 恢复合适的字符间距
+            let y = 80; // 恢复合适的顶部边距
+
+            // 绘制横式
+            ctx.textAlign = 'left';
+            ctx.font = "18px 'Times New Roman'"; // 横式字体适中
+            ctx.fillText(`${originalProblemData.problem}${showBoxes ? '' : ' ' + originalProblemData.answer}`, 10, 35);
+            ctx.font = "24px 'Times New Roman'"; // 竖式字体
+            ctx.textAlign = 'right';
+
+            const op1Str = op1.toString();
+            const op2Str = op2.toString();
+            const result = op1 * op2;
+
+            // 计算各数字的实际宽度（包含间距）
+            function getSpacedWidth(str) {
+                if (showBoxes) {
+                    // 方框模式：使用方框宽度计算
+                    const boxSize = 40;
+                    const boxSpacing = 2;
+                    return str.length * boxSize + (str.length - 1) * boxSpacing;
+                } else {
+                    // 数字模式：使用字符宽度计算
+                    const charWidth = ctx.measureText('0').width;
+                    return str.length * charWidth + (str.length - 1) * charSpacing;
+                }
+            }
+
+            const op1Width = getSpacedWidth(op1Str);
+            const op2Width = getSpacedWidth(op2Str);
+
+            // 绘制被乘数
+            if (showBlanks) {
+                drawBlanks(ctx, op1Str, rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, op1Str, rightAlignX, y, charSpacing, showBoxes);
+            }
+
+            y += lineSpacing;
+
+            // 绘制乘数
+            if (showBlanks) {
+                drawBlanks(ctx, op2Str, rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, op2Str, rightAlignX, y, charSpacing, showBoxes);
+            }
+
+            // 绘制乘号
+            ctx.textAlign = 'left';
+            // 计算乘号位置：紧贴乘数左边
+            let multiplySignX;
+            if (showBoxes) {
+                // 方框模式：基于方框宽度计算
+                multiplySignX = rightAlignX - op2Width - 10;
+            } else {
+                // 数字模式：基于实际数字位置计算
+                const charWidth = ctx.measureText('0').width;
+                const leftmostCharX = rightAlignX - (op2Str.length - 1) * (charWidth + charSpacing) - charWidth;
+                multiplySignX = leftmostCharX - 15;
+            }
+            ctx.fillText('×', multiplySignX - 15, y);
+            ctx.textAlign = 'right';
+
+            // 绘制第一条横线
+            y += 25; // 增加乘数和横线之间的间距
+            ctx.beginPath();
+            ctx.moveTo(rightAlignX - Math.max(op1Width, op2Width) - 25, y);
+            ctx.lineTo(rightAlignX + 5, y);
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 绘制中间步骤（多位数乘法）
+            if (op2Str.length > 1) {
+                for (let i = op2Str.length - 1; i >= 0; i--) {
+                    y += lineSpacing + 5; // 增加额外间距避免重叠
+                    const stepResult = op1 * Number(op2Str[i]);
+                    const stepResultStr = stepResult.toString();
+
+                    // 计算位置偏移：每个位数向左偏移一个位置
+                    let positionOffset;
+                    if (showBoxes) {
+                        // 方框模式：使用方框宽度和间距
+                        const boxSize = 40;
+                        const boxSpacing = 2;
+                        positionOffset = (op2Str.length - 1 - i) * (boxSize + boxSpacing);
+                    } else {
+                        // 数字模式：使用字符宽度和间距
+                        positionOffset = (op2Str.length - 1 - i) * (ctx.measureText('0').width + charSpacing);
+                    }
+
+                    if (showBlanks) {
+                        drawBlanks(ctx, stepResultStr, rightAlignX - positionOffset, y, 20, 50);
+                    } else {
+                        drawSpacedNumbers(ctx, stepResultStr, rightAlignX - positionOffset, y, charSpacing, showBoxes);
+                    }
+                }
+
+                // 绘制第二条横线
+                y += 15;
+                const resultWidth = getSpacedWidth(result.toString());
+                ctx.beginPath();
+                ctx.moveTo(rightAlignX - resultWidth - 10, y);
+                ctx.lineTo(rightAlignX + 5, y);
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // 绘制最终结果
+            y += lineSpacing + 5; // 增加额外间距避免与横线重叠
+            if (showBlanks) {
+                drawBlanks(ctx, result.toString(), rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, result.toString(), rightAlignX, y, charSpacing, showBoxes);
+            }
+        }
+
+        function drawDivision(canvas, index, dividend, divisor, originalProblemData) {
+            const ctx = canvas.getContext('2d');
+            ctx.font = "24px 'Times New Roman'"; // 合适的字体大小
+            ctx.textAlign = 'right';
+            const rightAlignX = canvas.width - 10;
+            const lineSpacing = 40; // 除法需要更大的行间距
+            const charSpacing = 18; // 恢复合适的字符间距
+            let y = 120; // 除法需要更大的顶部边距
+
+            // 绘制横式
+            ctx.textAlign = 'left';
+            ctx.font = "18px 'Times New Roman'"; // 横式字体适中
+            ctx.fillText(`${originalProblemData.problem}${showBoxes ? '' : ' ' + originalProblemData.answer}`, 10, 35);
+            ctx.font = "24px 'Times New Roman'"; // 竖式字体
+            ctx.textAlign = 'right';
+
+            const quotient = Math.floor(dividend / divisor);
+            const remainder = dividend % divisor;
+            const subtrahend = quotient * divisor;
+
+            // 计算各数字的实际宽度（包含间距）
+            function getSpacedWidth(str) {
+                if (showBoxes) {
+                    // 方框模式：使用方框宽度计算
+                    const boxSize = 40;
+                    const boxSpacing = 10;
+                    return str.length * boxSize + (str.length - 1) * boxSpacing;
+                } else {
+                    // 数字模式：使用字符宽度计算
+                    const charWidth = ctx.measureText('0').width;
+                    return str.length * charWidth + (str.length - 1) * charSpacing;
+                }
+            }
+
+            const dividendWidth = getSpacedWidth(dividend.toString());
+            const divisorWidth = getSpacedWidth(divisor.toString());
+
+            // 绘制商
+            if (showBlanks) {
+                drawBlanks(ctx, quotient.toString(), rightAlignX, y - lineSpacing - 20, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, quotient.toString(), rightAlignX, y - lineSpacing - 20, charSpacing, showBoxes);
+            }
+
+            // 绘制被除数
+            if (showBlanks) {
+                drawBlanks(ctx, dividend.toString(), rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, dividend.toString(), rightAlignX, y, charSpacing, showBoxes);
+            }
+
+            // 绘制除数
+            const divisorX = rightAlignX - dividendWidth - 15; // 缩小除数与被除数的间距
+            if (showBlanks) {
+                drawBlanks(ctx, divisor.toString(), divisorX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, divisor.toString(), divisorX, y, charSpacing, showBoxes);
+            }
+
+            // 绘制除法符号 (厂字形)
+            const symbolStartX = rightAlignX - dividendWidth - 15; // 调整符号位置，与被除数保持适当距离
+            const symbolTopY = y - lineSpacing - 5; // 商的上方
+            const symbolBottomY = y + 5; // 被除数下方一点
+
+            ctx.beginPath();
+            // 横线
+            ctx.moveTo(symbolStartX, symbolTopY);
+            ctx.lineTo(rightAlignX, symbolTopY);
+            // 竖线
+            ctx.moveTo(symbolStartX, symbolTopY);
+            ctx.lineTo(symbolStartX, symbolBottomY);
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 绘制减数
+            y += lineSpacing;
+            if (showBlanks) {
+                drawBlanks(ctx, subtrahend.toString(), rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, subtrahend.toString(), rightAlignX, y, charSpacing, showBoxes);
+            }
+
+            // 绘制减数下方的横线
+            y += 10;
+            ctx.beginPath();
+            const subtrahendWidth = getSpacedWidth(subtrahend.toString());
+            ctx.moveTo(rightAlignX - subtrahendWidth - 5, y);
+            ctx.lineTo(rightAlignX + 5, y);
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 绘制余数
+            y += lineSpacing;
+            if (showBlanks) {
+                drawBlanks(ctx, remainder.toString(), rightAlignX, y, 20, 50);
+            } else {
+                drawSpacedNumbers(ctx, remainder.toString(), rightAlignX, y, charSpacing, showBoxes);
+            }
+        }
+
+        /**
+        // longDivision 算法不再需要，其逻辑已整合到 drawDivision 中
+
+        /**
+         * 切换页面
+         * @param {number} direction - -1 表示上一页, 1 表示下一页
+         */
+        function changePage(direction) {
+            currentPage += direction;
+            renderCalculationPage();
+            updatePaginationControls();
+        }
+
+        /**
+         * 更新分页按钮的状态和页码信息
+         */
+        function updatePaginationControls() {
+            if (!problemsData) return;
+
+            const totalPages = Math.ceil(problemsData.length / problemsPerPage);
+            pageInfo.textContent = `第 ${currentPage} / ${totalPages} 页`;
+
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages;
+        }
+
+        /**
+         * 导出报告为PDF
+         */
+        function exportReportToPdf() {
+            if (!problemsData) {
+                alert('没有可导出的报告数据。');
+                return;
+            }
+
+            const element = reportContainer;
+            const opt = {
+                margin: 0,
+                filename: '竖式计算练习.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // 调用 html2pdf.js
+            html2pdf().set(opt).from(element).save();
+        }
+
+        /**
+         * 重置UI和数据状态
+         */
+        function resetState() {
+            reportContainer.innerHTML = '';
+            exportPdfBtn.disabled = true;
+            fileInput.value = '';
+            fileNameDisplay.textContent = '';
+            problemsData = null;
+            currentPage = 1;
+            pageInfo.textContent = '';
+            prevPageBtn.disabled = true;
+            nextPageBtn.disabled = true;
+        }
+    </script>
+</body>
+
+</html>

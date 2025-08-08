@@ -393,7 +393,7 @@
             // Create paragraph for horizontal calculation
             const horizontalProblem = document.createElement('p');
             horizontalProblem.className = 'horizontal-problem'; // Add a class for styling
-            horizontalProblem.textContent = `${problemData.problem} ${problemData.answer}`;
+            horizontalProblem.textContent = showBlanks ? problemData.problem : `${problemData.problem} ${problemData.answer}`;
             item.appendChild(horizontalProblem);
 
 
@@ -415,6 +415,9 @@
          * 绘制调度器
          */
         function drawCalculation(canvas, index, problem, originalProblemData) {
+            if (showBlanks) {
+                return; // Do not draw anything on the canvas in blanks mode
+            }
             const { operand1, operand2, operator } = problem;
             switch (operator) {
                 case '+':

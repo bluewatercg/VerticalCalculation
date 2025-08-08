@@ -106,13 +106,25 @@
 
         .calculation-item {
             display: flex;
+            flex-direction: column;
+            /* 垂直堆叠 */
             align-items: center;
-            /* 垂直居中对齐 */
+            /* 水平居中 */
             justify-content: flex-start;
-            /* 从左开始对齐 */
+            /* 顶部对齐 */
             font-family: 'KaiTi', 'STKaiti', serif;
-            font-size: 22px;
-            padding: 10px 0;
+            font-size: 18px;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .horizontal-problem {
+            margin: 0;
+            padding: 5px 0;
+            font-size: 16px;
+            font-family: sans-serif;
+            text-align: center;
         }
 
         .item-index {
@@ -132,7 +144,6 @@
 
         .calculation-item canvas {
             width: 100%;
-            height: 100%;
         }
     </style>
 </head>
@@ -379,11 +390,18 @@
             const item = document.createElement('div');
             item.className = 'calculation-item';
 
+            // Create paragraph for horizontal calculation
+            const horizontalProblem = document.createElement('p');
+            horizontalProblem.className = 'horizontal-problem'; // Add a class for styling
+            horizontalProblem.textContent = `${problemData.problem} ${problemData.answer}`;
+            item.appendChild(horizontalProblem);
+
+
             const canvas = document.createElement('canvas');
             // A4纸精确计算：可用空间19cm×27.7cm，4×5布局
             // 每个item：4.75cm×5.54cm，但考虑到显示效果，适当调整
             canvas.width = 300; // 增加宽度确保内容清晰
-            canvas.height = 350; // 增加高度确保竖式完整显示，避免重叠
+            canvas.height = 300; // 增加高度确保竖式完整显示，避免重叠
             item.appendChild(canvas);
 
             // 调度到相应的绘制函数
@@ -423,14 +441,8 @@
             ctx.textAlign = 'right';
             const rightAlignX = canvas.width - 8;
             const lineSpacing = 25; // 适应210px高度的行间距
-            let y = 60; // 适应210px高度的顶部边距
+            let y = 20; // 适应210px高度的顶部边距
 
-            // 绘制横式
-            ctx.textAlign = 'left';
-            ctx.font = "12px 'Times New Roman'"; // 横式字体更小以适应宽度
-            ctx.fillText(`${originalProblemData.problem}${showBoxes ? '' : ' ' + originalProblemData.answer}`, 5, 20);
-            ctx.font = "18px 'Times New Roman'"; // 竖式字体
-            ctx.textAlign = 'right';
 
             // 计算各数字的实际宽度（包含间距）
             const charSpacing = 12; // 适应180px宽度的字符间距
@@ -489,14 +501,8 @@
             const rightAlignX = canvas.width - 10;
             const lineSpacing = 35; // 恢复合适的行间距
             const charSpacing = 18; // 恢复合适的字符间距
-            let y = 80; // 恢复合适的顶部边距
+            let y = 30; // 恢复合适的顶部边距
 
-            // 绘制横式
-            ctx.textAlign = 'left';
-            ctx.font = "18px 'Times New Roman'"; // 横式字体适中
-            ctx.fillText(`${originalProblemData.problem}${showBoxes ? '' : ' ' + originalProblemData.answer}`, 10, 35);
-            ctx.font = "24px 'Times New Roman'"; // 竖式字体
-            ctx.textAlign = 'right';
 
             const op1Str = op1.toString();
             const op2Str = op2.toString();
@@ -611,14 +617,8 @@
             const rightAlignX = canvas.width - 10;
             const lineSpacing = 40; // 除法需要更大的行间距
             const charSpacing = 18; // 恢复合适的字符间距
-            let y = 120; // 除法需要更大的顶部边距
+            let y = 40; // 除法需要更大的顶部边距
 
-            // 绘制横式
-            ctx.textAlign = 'left';
-            ctx.font = "18px 'Times New Roman'"; // 横式字体适中
-            ctx.fillText(`${originalProblemData.problem}${showBoxes ? '' : ' ' + originalProblemData.answer}`, 10, 35);
-            ctx.font = "24px 'Times New Roman'"; // 竖式字体
-            ctx.textAlign = 'right';
 
             const quotient = Math.floor(dividend / divisor);
             const remainder = dividend % divisor;

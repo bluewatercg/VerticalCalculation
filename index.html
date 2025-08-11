@@ -145,6 +145,17 @@
         .calculation-item canvas {
             width: 100%;
         }
+
+        .pdf-page {
+            width: 19cm; /* 21cm - 2cm margins */
+            min-height: 27.7cm; /* 29.7cm - 2cm margins */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background: white;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
     </style>
 </head>
 
@@ -734,7 +745,7 @@
         }
 
         /**
-         * 导出报告为PDF
+         * 导出所有页面为PDF
          */
         function exportReportToPdf() {
             if (!problemsData) {
@@ -742,17 +753,56 @@
                 return;
             }
 
-            const element = reportContainer;
+            // 1. 创建一个临时的、屏幕外的容器来渲染所有页面
+            const pdfContainer = document.createElement('div');
+            pdfContainer.style.position = 'absolute';
+            pdfContainer.style.left = '-9999px'; // 移出屏幕外
+            document.body.appendChild(pdfContainer);
+
+            const totalPages = Math.ceil(problemsData.length / problemsPerPage);
+
+            // 2. 循环渲染每一页
+            for (let i = 1; i <= totalPages; i++) {
+                const start = (i - 1) * problemsPerPage;
+                const end = start + problemsPerPage;
+                const problemsToRender = problemsData.slice(start, end);
+
+                // 为每一页创建一个容器
+                const pageElement = document.createElement('div');
+                pageElement.className = 'pdf-page'; // 使用这个类来控制分页
+
+                const grid = document.createElement('div');
+                grid.className = 'calculation-grid';
+
+                problemsToRender.forEach((problem, index) => {
+                    const itemElement = createCalculationItem(problem, start + index + 1);
+                    if (itemElement) {
+                        grid.appendChild(itemElement);
+                    }
+                });
+
+                pageElement.appendChild(grid);
+                pdfContainer.appendChild(pageElement);
+            }
+
+            // 3. 设置 html2pdf.js 选项
             const opt = {
-                margin: 0,
-                filename: '竖式计算练习.pdf',
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+                margin: [1, 1, 1, 1], // 1cm margins
+                filename: '竖式计算练习_全部.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
                 jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
             };
 
-            // 调用 html2pdf.js
-            html2pdf().set(opt).from(element).save();
+            // 4. 从临时容器生成PDF，并在完成后清理
+            html2pdf().from(pdfContainer).set(opt).save().then(() => {
+                // 5. 移除临时容器
+                document.body.removeChild(pdfContainer);
+            }).catch((error) => {
+                console.error("PDF导出失败:", error);
+                // 确保即使失败也移除临时容器
+                document.body.removeChild(pdfContainer);
+            });
         }
 
         /**

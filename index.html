@@ -756,7 +756,10 @@
             // 1. 创建一个临时的、屏幕外的容器来渲染所有页面
             const pdfContainer = document.createElement('div');
             pdfContainer.style.position = 'absolute';
-            pdfContainer.style.left = '-9999px'; // 移出屏幕外
+            pdfContainer.style.top = '0';
+            pdfContainer.style.left = '0';
+            pdfContainer.style.opacity = '0';
+            pdfContainer.style.zIndex = '-1'; // Put it behind other content
             document.body.appendChild(pdfContainer);
 
             const totalPages = Math.ceil(problemsData.length / problemsPerPage);

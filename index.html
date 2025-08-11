@@ -156,6 +156,21 @@
             box-sizing: border-box;
             page-break-after: always;
         }
+
+        #pdf-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -753,26 +768,26 @@
                 return;
             }
 
-            // 1. 创建一个临时的、屏幕外的容器来渲染所有页面
+            // 1. 创建并显示加载覆盖层
+            const loader = document.createElement('div');
+            loader.id = 'pdf-loader';
+            loader.textContent = '正在生成PDF，请稍候...';
+            document.body.appendChild(loader);
+
+            // 2. 创建一个可见的容器来渲染所有页面
             const pdfContainer = document.createElement('div');
-            pdfContainer.style.position = 'absolute';
-            pdfContainer.style.top = '0';
-            pdfContainer.style.left = '0';
-            pdfContainer.style.opacity = '0';
-            pdfContainer.style.zIndex = '-1'; // Put it behind other content
             document.body.appendChild(pdfContainer);
 
             const totalPages = Math.ceil(problemsData.length / problemsPerPage);
 
-            // 2. 循环渲染每一页
+            // 3. 循环渲染每一页
             for (let i = 1; i <= totalPages; i++) {
                 const start = (i - 1) * problemsPerPage;
                 const end = start + problemsPerPage;
                 const problemsToRender = problemsData.slice(start, end);
 
-                // 为每一页创建一个容器
                 const pageElement = document.createElement('div');
-                pageElement.className = 'pdf-page'; // 使用这个类来控制分页
+                pageElement.className = 'pdf-page';
 
                 const grid = document.createElement('div');
                 grid.className = 'calculation-grid';
@@ -788,24 +803,28 @@
                 pdfContainer.appendChild(pageElement);
             }
 
-            // 3. 设置 html2pdf.js 选项
+            // 4. 设置 html2pdf.js 选项
             const opt = {
-                margin: [1, 1, 1, 1], // 1cm margins
+                margin: [1, 1, 1, 1],
                 filename: '竖式计算练习_全部.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true, allowTaint: true },
                 jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
             };
 
-            // 4. 从临时容器生成PDF，并在完成后清理
-            html2pdf().from(pdfContainer).set(opt).save().then(() => {
-                // 5. 移除临时容器
-                document.body.removeChild(pdfContainer);
-            }).catch((error) => {
-                console.error("PDF导出失败:", error);
-                // 确保即使失败也移除临时容器
-                document.body.removeChild(pdfContainer);
-            });
+            // 5. 从容器生成PDF，并在完成后清理
+            // 使用 setTimeout 给浏览器一点时间来渲染canvas
+            setTimeout(() => {
+                html2pdf().from(pdfContainer).set(opt).save().then(() => {
+                    document.body.removeChild(loader);
+                    document.body.removeChild(pdfContainer);
+                }).catch((error) => {
+                    console.error("PDF导出失败:", error);
+                    document.body.removeChild(loader);
+                    document.body.removeChild(pdfContainer);
+                    alert("导出PDF时发生错误，请查看控制台了解详情。");
+                });
+            }, 500); // 500毫秒延迟
         }
 
         /**
